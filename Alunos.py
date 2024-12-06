@@ -42,6 +42,48 @@ def mostrarDados():
     
     os.system('pause')
 
+def excluirAluno():
+    os.system('cls')
+    matricula = int(input("Digite a matricula que deseja excluir:"))
+    if matricula in db['alunos'].keys():
+        nome = db['alunos'][matricula]['nome']
+        curso = db['alunos'][matricula]['curso']
+
+        confirma = input(f"Nome: {nome}\nCurso: {curso}\n\nConfirma exclusao? (S) ou (N)")
+        if confirma.upper() =="S":
+            del db['alunos'][matricula]
+            print('\n\nExluido com sucesso.')
+            os.system('pause')
+        else:
+            print('\n\n>>> Cancelado. Matricula nao excluida.')
+            os.system('pause')
+
+    else:
+        print('\n\n>>> Matricula invalida.')
+        os.system('pause')
+
+def editarAluno():
+    os.system('cls')
+    matricula = int(input("Digite a matricula que deseja editar:"))
+    if matricula in db['alunos'].keys():
+
+        nome = db['alunos'][matricula]['nome']
+        curso = db['alunos'][matricula]['curso']
+
+        novoNome = input(f"Nome atual: {nome} | Novo nome: ")
+        novoCurso = input(f"Curso atual: {curso} | Novo curso: ")
+
+        confirma = input(f"\n\nNome:{novoNome}\nCurso: {novoCurso}\n\nConfirma edição? (S) ou (N)\n")
+        if confirma.upper() =="S":
+            db['alunos'][matricula]['nome'] = novoNome
+            db['alunos'][matricula]['curso'] = novoCurso
+
+            print('\n\nEdição realizada com sucesso.')
+        else:
+            print('\n\n>>> Cancelado. Matricula nao editada.')
+    else:
+        print('\n\n>>> Matricula invalida.')
+    os.system('pause')
 
 def menu():
     while True:
@@ -49,7 +91,9 @@ def menu():
         print('\n\n--- Menu Principal ---')
         print('1. Cadastrar Aluno')
         print('2. Mostrar Dados')
-        print('3. Sair')
+        print('3. Excluir')
+        print('4. Editar')
+        print('5. Sair')
         opcao = input('\nEscolha uma opção: ')
 
         if opcao == '1':
@@ -57,6 +101,10 @@ def menu():
         elif opcao == '2':
             mostrarDados()
         elif opcao == '3':
+            excluirAluno()
+        elif opcao == '4':
+            editarAluno()
+        elif opcao == '5':
             db.close()
             break
         else:
